@@ -4,5 +4,11 @@ phases:
   build:
     commands:
       # Build the Docker image
-      - docker build -t bibichannel/stremlit-app:latest .
+      - docker build -t $REPOSITORY_URL:latest .
+      - SHORT_VERSION=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c 1-7)
+      - docker tag $REPOSITORY_URL:$SHORT_VERSION
   
+  post_build:
+    commands:
+      - docker push $REPOSITORY_URL:latest
+      - docker push $REPOSITORY_URL:$SHORT_VERSION
