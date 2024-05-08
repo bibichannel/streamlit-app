@@ -4,9 +4,12 @@ phases:
   build:
     commands:
       # Build the Docker image
-      - docker build -t $REPOSITORY_URL:latest .
+      - docker build -t streamlit-app:latest .
       - SHORT_VERSION=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c 1-7)
-      - docker tag $REPOSITORY_URL:$SHORT_VERSION
+      - docker tag streamlit-app:latest $REPOSITORY_URL:$SHORT_VERSION
+      - docker tag streamlit-app:latest $REPOSITORY_URL:latest
+      - echo $SHORT_VERSION
+      - echo $REPOSITORY_URL
   
   post_build:
     commands:
