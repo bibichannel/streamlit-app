@@ -21,7 +21,7 @@ phases:
       # Push docker images to ECR
       - docker push $REPOSITORY_URL:latest
       - docker push $REPOSITORY_URL:$SHORT_VERSION
-      - printf '[{"name":"streamlit-app","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"streamlit-app","imageUri":"%s"}]' $REPOSITORY_URL:latest > imagedefinitions.json
 
 artifacts:
   files: imagedefinitions.json
