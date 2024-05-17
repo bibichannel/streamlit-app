@@ -10,7 +10,7 @@ phases:
     commands:
       # Build the Docker image
       - docker build -t streamlit-app:latest .
-      - SHORT_VERSION=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c 1-7)
+      - SHORT_VERSION=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c 1-8)
       - docker tag streamlit-app:latest $REPOSITORY_URL:$SHORT_VERSION
       - docker tag streamlit-app:latest $REPOSITORY_URL:latest
       - echo $SHORT_VERSION
@@ -21,7 +21,7 @@ phases:
       # Push docker images to ECR
       - docker push $REPOSITORY_URL:latest
       - docker push $REPOSITORY_URL:$SHORT_VERSION
-      - printf '[{"name":"streamlit-app","imageUri":"%s"}]' $REPOSITORY_URL:latest > imagedefinitions.json
+      - printf '[{"name":"streamlit-app","imageUri":"%s"}]' $REPOSITORY_URL:$SHORT_VERSION > imagedefinitions.json
 
 artifacts:
   files: imagedefinitions.json
